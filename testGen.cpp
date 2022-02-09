@@ -2,17 +2,18 @@
 #include <fstream>
 #include <vector>
 #include <set>
+#include <algorithm>
+#include <queue>
 #include <stdlib.h>
 
 class UnionFind {
 private:
     std::vector<int> link;
     std::vector<int> setSize;
-    std::set<int> roots;
 
     int getRoot(int u) {
         if (link[u] == u) return u;
-        else return link[u] = getRoot(u);
+        else return link[u] = getRoot(link[u]);
     }
 
 public:
@@ -21,8 +22,7 @@ public:
         setSize.resize(n + 1);
         for (int i = 1; i <= n; i++) {
             link[i] = i;
-            setSize[i] = i;
-            roots.insert(i);
+            setSize[i] = 1;
         }
     }
 
@@ -33,7 +33,6 @@ public:
             return;
         if (setSize[b] > setSize[a])
             std::swap(a, b);
-        roots.erase(b); // b is no longer a root since will be connected to a
         link[b] = a;
         setSize[a] += setSize[b];
     }
@@ -47,40 +46,75 @@ int randBetween(int a, int b) {
     return rand() % (b - a + 1) + a;
 }
 
-void generate(std::string caseSuffix, int minimumN, int maximumN) {
+bool randDecision() {
+    return (bool) rand() % 2;
+}
+
+void generate(std::string caseSuffix, int minimumN, int maximumN, std::string method) {
     std::ofstream fout("cases/case" + caseSuffix + ".in");
     const int n = randBetween(minimumN, maximumN);
+    const int m = randBetween(1, n);
+    const int maxWeight = 1e4;
+    const int maxTimes = 1e4;
+
+    // Part 1 - Generate tree
+
     fout << n << '\n';
-    for (int i = 0; i < n; i++) {
-        int actNum = randBetween(1, 3);
-        fout << actNum;
-        if (i < n - 1) fout << ' ';
+    if (method == "random") {
+        std::vector<int> nodes;
+        for (int i = 1; i <= n; i++) {
+            nodes.push_back(i);
+        }
+        std::random_shuffle(nodes.begin(), nodes.end());
+        std::queue<int> pending;
+        for (int node : nodes) {
+            pending.push(node);
+        }
+        while (pending.size() > 1) {
+            int nodeA = pending.front(); pending.pop();
+            int nodeB = pending.front(); pending.pop();
+            int weight = randBetween(1, maxWeight);
+
+            fout << nodeA << " " << nodeB << " " << weight << '\n';
+
+            // Pick one randomly to become the root of the component
+            if (randDecision()) 
+                std::swap(nodeA, nodeB);
+            pending.push(nodeA);
+        }
     }
-    fout << '\n';
+    // Part 2 - Generate destination nodes
+
+    fout << m << '\n';
+    std::vector<int> destinationNodes;
+    for (int i = 1; i <= n; i++) {
+        destinationNodes.push_back(i);
+    }
+    std::random_shuffle(destinationNodes.begin(), destinationNodes.end());
+
+    for (int i = 0; i < m; i++) {
+        int times = randBetween(1, maxTimes);
+        fout << destinationNodes[i] << " " << times << '\n';
+    }
     fout.close();
 }
 
 int main() {
-    const int minimumNSet1 = 1;
-    const int maximumNSet1 = 200;
+    const int minimumNSet1 = 900;
+    const int maximumNSet1 = 1000;
 
-    const int minimumNSet2 = 1000;
-    const int maximumNSet2 = 2500;
+    const int minimumNSet2 = 7 * 1e4;
+    const int maximumNSet2 = 1e5;
 
-    const int minimumNSet3 = 5 * 1e5;
-    const int maximumNSet3 = 7 * 1e5;
-    
-    const int minimumNSet4 = 1e6;
-    const int maximumNSet4 = 1e6;
-    for (int i = 1; i <= 20; i++) {
-        if (i <= 4)
-            generate(std::to_string(i), minimumNSet1, maximumNSet1);
-        else if (i <= 8)
-            generate(std::to_string(i), minimumNSet2, maximumNSet2);
-        else if (i <= 16)
-            generate(std::to_string(i), minimumNSet3, maximumNSet3);
-        else 
-            generate(std::to_string(i), minimumNSet4, maximumNSet4);
+    const int minimumNSet3 = 7 * 1e4;
+    const int maximumNSet3 = 1e5;
+    for (int i = 2; i <= 20; i++) {
+        if (i <= 6)
+            generate(std::to_string(i), minimumNSet1, 5, "random");
+        else if (i <= 10)
+            generate(std::to_string(i), minimumNSet2, maximumNSet2, "random");
+        else if (i <= 20)
+            generate(std::to_string(i), minimumNSet3, maximumNSet3, "random");
     }
     return 0;
 }
