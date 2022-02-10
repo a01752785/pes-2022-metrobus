@@ -82,6 +82,8 @@ int main() {
         }
     }
     
+    sort(answer.begin(), answer.end());
+
     minimum = minimum * 2; // Each travel is round trip
     cout << minimum << '\n';
     for (ll i = 0; i < answer.size(); i++) {
