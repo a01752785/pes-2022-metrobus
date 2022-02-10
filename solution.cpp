@@ -48,20 +48,27 @@ void rotate(ll u, ll p, ll currentTotal, vector<ll>& totalCost) {
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    
+    string inputFileName(argv[1]);
+    string outputFileName(argv[2]);
+
+    ifstream fin(inputFileName);
+    ofstream fout(outputFileName);
+    
     ll n;
-    cin >> n;
+    fin >> n;
     for (ll i = 1; i <= n - 1; i++) {
         ll a, b, w;
-        cin >> a >> b >> w;
+        fin >> a >> b >> w;
         adjList[a].push_back(edge(b, w));
         adjList[b].push_back(edge(a, w));
     }
     ll m;
-    cin >> m;
+    fin >> m;
     for (ll i = 1; i <= m; i++) {
         ll to, times;
-        cin >> to >> times;
+        fin >> to >> times;
         freq[to] = times;
     }
     
@@ -85,12 +92,12 @@ int main() {
     sort(answer.begin(), answer.end());
 
     minimum = minimum * 2; // Each travel is round trip
-    cout << minimum << '\n';
+    fout << minimum << '\n';
     for (ll i = 0; i < answer.size(); i++) {
-        cout << answer[i];
+        fout << answer[i];
         if (i < answer.size() - 1)
-            cout << ' ';
+            fout << ' ';
     }
-    cout << '\n';
+    fout << '\n';
     return 0;
 }
