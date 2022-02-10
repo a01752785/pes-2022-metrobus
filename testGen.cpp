@@ -47,7 +47,7 @@ int randBetween(int a, int b) {
 }
 
 bool randDecision() {
-    return (bool) rand() % 2;
+    return (rand() % 2 == 0) ? false : true;
 }
 
 void generate(std::string caseSuffix, int minimumN, int maximumN, std::string method) {
@@ -83,13 +83,28 @@ void generate(std::string caseSuffix, int minimumN, int maximumN, std::string me
             pending.push(nodeA);
         }
     }
-    else if (method == "star") {
+    else if (method == "onestar") {
         int root = randBetween(1, n);
         int currentNode = 1;
         for (int i = 1; i <= n - 1; i++) {
             if (currentNode == root) currentNode++;
             int weight = randBetween(1, maxWeight);
             fout << currentNode++ << " " << root << " " << weight << '\n';
+        }
+    }
+    else if (method == "twostars") {
+        int root1 = randBetween(1, n);
+        int root2 = randBetween(1, n - 1);
+        if (root2 == root1) root2++; // Makes sure that the roots will be different
+
+        int weight = randBetween(1, maxWeight);
+        fout << root1 << " " << root2 << " " << weight << '\n'; // Edge between the two roots
+
+        for (int node = 1; node <= n; node++) {
+            if (node == root1 || node == root2) continue;
+            int selectedRoot = (randDecision()) ? root1 : root2;
+            weight = randBetween(1, maxWeight);
+            fout << selectedRoot << " " << node << " " << weight << '\n';
         }
     }
     else if (method == "line") {
@@ -138,6 +153,8 @@ void generate(std::string caseSuffix, int minimumN, int maximumN, std::string me
 }
 
 int main() {
+    generate("21", 8, 8, "twostars");
+    return 0;
     const int minimumNSet1 = 900;
     const int maximumNSet1 = 1000;
 
