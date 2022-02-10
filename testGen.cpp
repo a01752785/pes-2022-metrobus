@@ -103,6 +103,24 @@ void generate(std::string caseSuffix, int minimumN, int maximumN, std::string me
             fout << nodes[i - 1] << " " << nodes[i] << " " << weight << '\n';
         }
     }
+    else if (method == "complete") {
+        std::vector<int> nodes; // Will be the preorder of the tree
+        nodes.push_back(0); // To be 1-indexed
+        for (int i = 1; i <= n; i++) {
+            nodes.push_back(i);
+        }
+        std::random_shuffle(nodes.begin() + 1, nodes.end());
+
+        // i * 2 is left node
+        // i * 2 + 1 is right node
+
+        for (int i = 1; i * 2 + 1 <= n ; i++) {
+            int weight = randBetween(1, maxWeight);
+            fout << nodes[i] << " " << nodes[i * 2] << " " << weight << '\n';
+            weight = randBetween(1, maxWeight);
+            fout << nodes[i] << " " << nodes[i * 2 + 1] << " " << weight << '\n';
+        }
+    }
     // Part 2 - Generate destination nodes
 
     fout << m << '\n';
@@ -120,8 +138,6 @@ void generate(std::string caseSuffix, int minimumN, int maximumN, std::string me
 }
 
 int main() {
-    generate("21", 10, 10, "line");
-    return 0;
     const int minimumNSet1 = 900;
     const int maximumNSet1 = 1000;
 
