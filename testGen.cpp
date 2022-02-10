@@ -83,6 +83,15 @@ void generate(std::string caseSuffix, int minimumN, int maximumN, std::string me
             pending.push(nodeA);
         }
     }
+    else if (method == "star") {
+        int root = randBetween(1, n);
+        int currentNode = 1;
+        for (int i = 1; i <= n - 1; i++) {
+            if (currentNode == root) currentNode++;
+            int weight = randBetween(1, maxWeight);
+            fout << currentNode++ << " " << root << " " << weight << '\n';
+        }
+    }
     // Part 2 - Generate destination nodes
 
     fout << m << '\n';
