@@ -92,6 +92,17 @@ void generate(std::string caseSuffix, int minimumN, int maximumN, std::string me
             fout << currentNode++ << " " << root << " " << weight << '\n';
         }
     }
+    else if (method == "line") {
+        std::vector<int> nodes;
+        for (int i = 1; i <= n; i++) {
+            nodes.push_back(i);
+        }
+        std::random_shuffle(nodes.begin(), nodes.end());
+        for (int i = 1; i <= n - 1; i++) {
+            int weight = randBetween(1, maxWeight);
+            fout << nodes[i - 1] << " " << nodes[i] << " " << weight << '\n';
+        }
+    }
     // Part 2 - Generate destination nodes
 
     fout << m << '\n';
@@ -109,6 +120,8 @@ void generate(std::string caseSuffix, int minimumN, int maximumN, std::string me
 }
 
 int main() {
+    generate("21", 10, 10, "line");
+    return 0;
     const int minimumNSet1 = 900;
     const int maximumNSet1 = 1000;
 
