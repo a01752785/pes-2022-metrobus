@@ -161,7 +161,7 @@ int main() {
 
     const int minimumNSet3 = 7 * 1e4;
     const int maximumNSet3 = 1e5;
-    for (int i = 2; i <= 20; i++) {
+    for (int i = 1; i <= 20; i++) {
         if (i <= 6) {
             if (i <= 3)
                 generate(std::to_string(i), minimumNSet1, maximumNSet1, "random");
