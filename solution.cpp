@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long int ll;
-#define maxn 100005
+#define maxn 50005
 
 struct edge {
     ll to;
@@ -54,50 +54,57 @@ int main(int argc, char* argv[]) {
     string outputFileName(argv[2]);
 
     ifstream fin(inputFileName);
-    ofstream fout(outputFileName);
-    
-    ll n;
-    fin >> n;
-    for (ll i = 1; i <= n - 1; i++) {
-        ll a, b, w;
-        fin >> a >> b >> w;
-        adjList[a].push_back(edge(b, w));
-        adjList[b].push_back(edge(a, w));
-    }
-    ll m;
-    fin >> m;
-    for (ll i = 1; i <= m; i++) {
-        ll to, times;
-        fin >> to >> times;
-        freq[to] = times;
-    }
-    
-    ll firstCost = costFor1stRoot(1, 0);
-    ll minimum = LLONG_MAX;
-    vector<ll> totalCost(n + 1, 0); // To store the total cost of each place
-    vector<ll> answer;
-    rotate(1, 0, firstCost, totalCost);
-    
-    for (ll i = 1; i <= n; i++) {
-        if (totalCost[i] < minimum) {
-            minimum = totalCost[i];
-            answer.clear();
-            answer.push_back(i);
+    ofstream fout (outputFileName);
+    ll t = 1;
+    while (t--) {
+        ll n;
+        fin >> n;
+        for (ll i = 1; i <= n; i++) {
+            adjList[i].clear();
+            freq[i] = 0;
+            totalFreq[i] = 0;
+            dist[i] = 0;
         }
-        else if (totalCost[i] == minimum) {
-            answer.push_back(i);
+        for (ll i = 1; i <= n - 1; i++) {
+            ll a, b, w;
+            fin >> a >> b >> w;
+            adjList[a].push_back(edge(b, w));
+            adjList[b].push_back(edge(a, w));
         }
-    }
-    
-    sort(answer.begin(), answer.end());
+        ll m;
+        fin >> m;
+        for (ll i = 1; i <= m; i++) {
+            ll to, times;
+            fin >> to >> times;
+            freq[to] = times;
+        }
+        ll firstCost = costFor1stRoot(1, 0);
+        ll minimum = LLONG_MAX;
+        vector<ll> totalCost(n + 1, 0); // To store the total cost of each place
+        vector<ll> answer;
+        rotate(1, 0, firstCost, totalCost);
+        
+        for (ll i = 1; i <= n; i++) {
+            if (totalCost[i] < minimum) {
+                minimum = totalCost[i];
+                answer.clear();
+                answer.push_back(i);
+            }
+            else if (totalCost[i] == minimum) {
+                answer.push_back(i);
+            }
+        }
+        
+        sort(answer.begin(), answer.end());
 
-    minimum = minimum * 2; // Each travel is round trip
-    fout << minimum << '\n';
-    for (ll i = 0; i < answer.size(); i++) {
-        fout << answer[i];
-        if (i < answer.size() - 1)
-            fout << ' ';
+        minimum = minimum * 2; // Each travel is round trip
+        fout << minimum << '\n';
+        for (ll i = 0; i < answer.size(); i++) {
+            fout << answer[i];
+            if (i < answer.size() - 1)
+                fout << ' ';
+        }
+        fout << '\n';
     }
-    fout << '\n';
     return 0;
 }

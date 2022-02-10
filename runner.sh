@@ -9,5 +9,5 @@ for i in {1..20}
 do
     inputFileName="cases/case$i.in"
     outputFileName="cases/case$i.out"
-    ./solution inputFileName, outputFileName
+    ./solution $inputFileName $outputFileName
 done

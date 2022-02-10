@@ -50,12 +50,12 @@ bool randDecision() {
     return (rand() % 2 == 0) ? false : true;
 }
 
-void generate(std::string caseSuffix, int minimumN, int maximumN, std::string method) {
+void generate(std::string caseSuffix, int minimumN, int maximumN, int maximumM, std::string method) {
     std::ofstream fout("cases/case" + caseSuffix + ".in");
     const int n = randBetween(minimumN, maximumN);
-    const int m = randBetween(1, n);
-    const int maxWeight = 1e3;
-    const int maxTimes = 1e3;
+    const int m = randBetween(0, maximumM);
+    const int maxWeight = 500;
+    const int maxTimes = 300;
 
     // Part 1 - Generate tree
 
@@ -156,34 +156,36 @@ int main() {
     const int minimumNSet1 = 900;
     const int maximumNSet1 = 1000;
 
-    const int minimumNSet2 = 7 * 1e4;
-    const int maximumNSet2 = 1e5;
+    const int minimumNSet2 = 4 * 1e4;
+    const int maximumNSet2 = 5 * 1e4;
 
-    const int minimumNSet3 = 7 * 1e4;
-    const int maximumNSet3 = 1e5;
+    const int minimumNSet3 = 4 * 1e4;
+    const int maximumNSet3 = 5 * 1e4;
     for (int i = 1; i <= 20; i++) {
         if (i <= 6) {
             if (i <= 3)
-                generate(std::to_string(i), minimumNSet1, maximumNSet1, "random");
+                generate(std::to_string(i), minimumNSet1, maximumNSet1, maximumNSet1, "random");
             else if (i == 4)
-                generate(std::to_string(i), minimumNSet1, maximumNSet1, "onestar");
+                generate(std::to_string(i), minimumNSet1, maximumNSet1, maximumNSet1, "onestar");
             else if (i == 5)
-                generate(std::to_string(i), minimumNSet1, maximumNSet1, "twostars");
+                generate(std::to_string(i), minimumNSet1, maximumNSet1, maximumNSet1, "twostars");
             else
-                generate(std::to_string(i), ((1 << 9) - 1), ((1 << 9) - 1), "complete");
+                generate(std::to_string(i), ((1 << 9) - 1), ((1 << 9) - 1), ((1 << 9) - 1), "complete");
         }
         else if (i <= 10) {
-            generate(std::to_string(i), minimumNSet2, maximumNSet2, "line");
+            generate(std::to_string(i), minimumNSet2, maximumNSet2, maximumNSet2, "line");
         }
         else if (i <= 20) {
-            if (i <= 14)
-                generate(std::to_string(i), minimumNSet3, maximumNSet3, "random");
+            if (i <= 13)
+                generate(std::to_string(i), minimumNSet3, maximumNSet3, maximumNSet3, "random");
+            else if (i == 14)
+                generate(std::to_string(i), minimumNSet3, maximumNSet3, 0, "random");
             else if (i <= 16)
-                generate(std::to_string(i), minimumNSet3, maximumNSet3, "onestar");
+                generate(std::to_string(i), minimumNSet3, maximumNSet3, maximumNSet3, "onestar");
             else if (i <= 18)
-                generate(std::to_string(i), minimumNSet3, maximumNSet3, "twostars");
+                generate(std::to_string(i), minimumNSet3, maximumNSet3, maximumNSet3, "twostars");
             else
-                generate(std::to_string(i), ((1 << 16) - 1), ((1 << 16) - 1), "complete");
+                generate(std::to_string(i), ((1 << 15) - 1), ((1 << 15) - 1), ((1 << 15) - 1), "complete");
         }
             
     }
