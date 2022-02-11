@@ -6,7 +6,7 @@ El COMI se encuentra organizando la logística del evento y como parte del proce
 
 El metrobús de la Ciudad de México está compuesto por $N$ estaciones ($1 \le N \le 50,000$) con la peculiaridad de que para cada par de estaciones existe una única ruta. Además, se conoce el tiempo $T$ ($1 \le T \le 500$) en minutos que es necesario invertir para hacer el viaje entre cada dos estaciones directamente conectadas. Sabemos que hay un hotel cercano a cada estación y que el tiempo de traslado del hotel a la estación es insignificante.
 
-El COMI tiene una lista de $M$ ($0 \le M \le N$) lugares (localizados convenientemente cerca de cada una de las estaciones) que se visitarán durante la concentración y cuántas veces se visitará cada uno ($1 \le F \le 300$). Para simplificar la organización, la ruta seguida siempre será del hotel al lugar de interés de ida y de regreso; es decir, no se irá de un lugar de interés a otro sin antes regresar al hotel.
+El COMI tiene una lista de $M$ ($0 \le M \le N$) lugares (localizados convenientemente cerca de cada una de las estaciones) que se visitarán durante la concentración y la cantidad de veces se visitará cada uno ($1 \le F \le 300$). Para simplificar la organización, la ruta seguida siempre será del hotel al lugar de interés de ida y de regreso; es decir, no se irá de un lugar de interés a otro sin antes regresar al hotel.
 
 Dado que el tiempo es oro en la concentración, es necesaria tu ayuda para determinar el mínimo tiempo de traslado posible visitando todos los lugares de interés, así como la ubicación de los hoteles donde se puede lograr este valor óptimo.
 
